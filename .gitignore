@@ -1,0 +1,24 @@
+# Build
+/build/
+/cmake-build-*/
+/out/
+compile_commands.json
+
+# IDE / editor
+.idea/
+.vscode/
+*.swp
+*~
+.cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local toolchain copies (downloaded at configure/build time)
+/tools/glslang/
+/tools/_deps_cache/
+
+# Runtime / logs
+*.log
+*.spv.bak
