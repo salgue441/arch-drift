@@ -1,6 +1,6 @@
 # Architecture
 
-Linux-first arcade kart project built in C++23 on Vulkan. The game is a single process with clear layer boundaries so each subsystem stays testable and explainable.
+**Archdrift** is a Linux-first arcade kart project built in C++23 on Vulkan. The game is a single process with clear layer boundaries so each subsystem stays testable and explainable.
 
 ## Layers
 

@@ -12,7 +12,7 @@ namespace kart::platform {
 struct WindowConfig {
     int width = 1280;
     int height = 720;
-    std::string title = "Qantara Kart";
+    std::string title = "Archdrift";
 };
 
 class Window {

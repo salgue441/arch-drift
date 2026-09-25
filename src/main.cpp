@@ -31,7 +31,7 @@ int main() {
     using kart::Error;
     using kart::to_string;
 
-    auto window = kart::platform::Window::create({.width = 1280, .height = 720, .title = "Qantara Kart"});
+    auto window = kart::platform::Window::create({.width = 1280, .height = 720, .title = "Archdrift"});
     if (!window) {
         std::cerr << "Failed to create window: " << to_string(window.error()) << '\n';
         return EXIT_FAILURE;

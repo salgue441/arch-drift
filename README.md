@@ -1,8 +1,8 @@
-# Qantara Kart
+# Archdrift
 
-Linux arcade kart racer (Mario Kart–*inspired*, original content) built with **C++23** and **Vulkan**.
+C++23 / Vulkan arcade kart racer with custom drift/boost, local races, and QR-paired phone controllers (web UI + gyro) on a closed LAN session.
 
-This repository is developed in explicit phases so the architecture and git history show deliberate progress: rendering first, then handling, then phone controllers, then race systems.
+Original content — Mario Kart–*inspired*, not affiliated with Nintendo. Developed in explicit phases so the architecture and git history stay portfolio-friendly.
 
 ## Status
 
@@ -10,12 +10,12 @@ This repository is developed in explicit phases so the architecture and git hist
 
 ## Requirements
 
-- Linux (Fedora and similar)
+- Linux (Fedora, Ubuntu, and similar)
 - CMake ≥ 3.28
 - C++23 compiler (GCC 13+ / Clang 16+)
 - Vulkan-capable GPU and `libvulkan`
-- Network access on first configure (FetchContent pulls GLFW and Vulkan-Headers)
-- Optional: `tools/glslang` (auto-downloaded) to recompile shaders
+- Network access on first configure (FetchContent may pull GLFW / Vulkan-Headers)
+- Optional: `tools/glslang` (or system `glslangValidator`) to recompile shaders
 
 ### Fedora packages (optional if you prefer system libs)
 
@@ -24,14 +24,19 @@ sudo dnf install glfw-devel vulkan-loader-devel vulkan-headers \
   vulkan-validation-layers glm-devel
 ```
 
-The build also works without those devel packages by fetching headers/GLFW via CMake.
+### Ubuntu packages (also used by CI)
+
+```bash
+sudo apt install build-essential cmake ninja-build libvulkan-dev \
+  glslang-tools libx11-dev libwayland-dev libxkbcommon-dev
+```
 
 ## Build
 
 ```bash
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 cmake --build build -j
-./build/qantara_kart
+./build/archdrift
 ```
 
 Close the window or press Escape to quit.
@@ -49,4 +54,4 @@ cmake --build build --target shaders
 
 ## License
 
-TBD.
+[MIT](LICENSE)

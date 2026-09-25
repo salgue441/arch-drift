@@ -134,7 +134,7 @@ Result<Renderer> Renderer::create(platform::Window& window, const std::filesyste
 #ifndef NDEBUG
     renderer.enable_validation_ = check_validation_layer_support();
     if (!renderer.enable_validation_) {
-        std::cerr << "[kart] validation layers requested but not available; continuing without them\n";
+        std::cerr << "[archdrift] validation layers requested but not available; continuing without them\n";
     }
 #else
     renderer.enable_validation_ = false;
@@ -186,9 +186,9 @@ Result<Renderer> Renderer::create(platform::Window& window, const std::filesyste
 VoidResult Renderer::create_instance() {
     VkApplicationInfo app_info{};
     app_info.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-    app_info.pApplicationName = "Qantara Kart";
+    app_info.pApplicationName = "Archdrift";
     app_info.applicationVersion = VK_MAKE_VERSION(0, 1, 0);
-    app_info.pEngineName = "QantaraKart";
+    app_info.pEngineName = "Archdrift";
     app_info.engineVersion = VK_MAKE_VERSION(0, 1, 0);
     app_info.apiVersion = VK_API_VERSION_1_2;
 
@@ -246,7 +246,7 @@ VoidResult Renderer::setup_debug_messenger() {
 
     if (create_debug_utils_messenger_ext(instance_, &create_info, nullptr, &debug_messenger_) !=
         VK_SUCCESS) {
-        std::cerr << "[kart] failed to create debug messenger; continuing\n";
+        std::cerr << "[archdrift] failed to create debug messenger; continuing\n";
         debug_messenger_ = VK_NULL_HANDLE;
     }
     return Ok();

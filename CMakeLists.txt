@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.28)
 
-project(qantara_kart
+project(archdrift
     VERSION 0.1.0
-    DESCRIPTION "Linux arcade kart racer (C++23 / Vulkan)"
+    DESCRIPTION "Archdrift — Linux arcade kart racer (C++23 / Vulkan)"
     LANGUAGES CXX
 )
 
@@ -138,32 +138,32 @@ add_custom_command(
 add_custom_target(shaders ALL DEPENDS ${KART_SHADER_SPV})
 
 # --- Executable -----------------------------------------------------------
-add_executable(qantara_kart
+add_executable(archdrift
     src/main.cpp
     src/platform/Window.cpp
     src/render/Renderer.cpp
 )
 
-add_dependencies(qantara_kart shaders)
+add_dependencies(archdrift shaders)
 
-target_include_directories(qantara_kart PRIVATE "${CMAKE_SOURCE_DIR}/src")
+target_include_directories(archdrift PRIVATE "${CMAKE_SOURCE_DIR}/src")
 
-target_compile_definitions(qantara_kart PRIVATE
+target_compile_definitions(archdrift PRIVATE
     KART_SHADER_DIR="${KART_SHADER_OUTPUT_DIR}"
 )
 
 if(TARGET glfw)
-    target_link_libraries(qantara_kart PRIVATE glfw Vulkan::Vulkan)
+    target_link_libraries(archdrift PRIVATE glfw Vulkan::Vulkan)
 else()
-    target_link_libraries(qantara_kart PRIVATE glfw Vulkan::Vulkan)
+    target_link_libraries(archdrift PRIVATE glfw Vulkan::Vulkan)
 endif()
 
 # Some Findglfw3 exports glfw, others glfw3::glfw
 if(TARGET glfw3::glfw)
-    target_link_libraries(qantara_kart PRIVATE glfw3::glfw)
+    target_link_libraries(archdrift PRIVATE glfw3::glfw)
 endif()
 
-target_compile_options(qantara_kart PRIVATE
+target_compile_options(archdrift PRIVATE
     -Wall
     -Wextra
     -Wpedantic
@@ -172,5 +172,5 @@ target_compile_options(qantara_kart PRIVATE
 )
 
 if(KART_WARNINGS_AS_ERRORS)
-    target_compile_options(qantara_kart PRIVATE -Werror)
+    target_compile_options(archdrift PRIVATE -Werror)
 endif()
