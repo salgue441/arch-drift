@@ -43,7 +43,14 @@ Host creates a session with a cryptographically random token. The lobby QR encod
 
 ## Dependencies
 
-Lean but not purist. Trusted libraries (Boost, GLFW, GLM, VMA, GoogleTest, etc.) are allowed when they earn a clear role. Each added dependency should be noted here with a one-line rationale.
+| Library | Role |
+|---------|------|
+| GLFW | Window + input |
+| Vulkan loader / headers | Rendering |
+| GLM | Math (Phase 1+) |
+| glslangValidator | GLSL → SPIR-V at build |
+
+Trusted libraries (Boost, VMA, GoogleTest, etc.) may be added later with a one-line rationale here.
 
 ## Documentation
 

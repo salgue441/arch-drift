@@ -6,7 +6,7 @@ Original content — Mario Kart–*inspired*, not affiliated with Nintendo. Deve
 
 ## Status
 
-**Phase 0** — window + Vulkan triangle.
+**Phase 1** — placeholder track, kart, chase camera, keyboard driving.
 
 ## Requirements
 
@@ -41,6 +41,8 @@ cmake --build build -j
 
 Close the window or press Escape to quit.
 
+**Drive:** W/Up throttle, S/Down brake, A/D or arrows steer.
+
 ## Recompile shaders
 
 ```bash
@@ -52,7 +54,8 @@ cmake --build build --target shaders
 - [Architecture](docs/architecture.md) — layers, errors, concurrency, memory, phone trust model
 - [Phases](docs/phases.md) — milestone map
 - [Coding standards](docs/coding-standards.md) — C++ and documentation conventions
-- [Phase 0 API map](docs/api/phase-0.md) — current module ownership and lifetimes
+- [Phase 0 API map](docs/api/phase-0.md) — Vulkan triangle boot path
+- [Phase 1 API map](docs/api/phase-1.md) — track, kart, camera, keyboard
 
 ## License
 

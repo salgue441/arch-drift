@@ -14,7 +14,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 option(KART_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" ON)
 
 include(FetchContent)
-# Allow Populate() for Vulkan-Headers so we only use include/ (no C++ modules target).
 if(POLICY CMP0169)
     cmake_policy(SET CMP0169 OLD)
 endif()
@@ -33,6 +32,18 @@ if(NOT glfw3_FOUND)
     set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
     set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(glfw)
+endif()
+
+# --- GLM ------------------------------------------------------------------
+find_package(glm QUIET)
+if(NOT glm_FOUND)
+    FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG 1.0.1
+        GIT_SHALLOW TRUE
+    )
+    FetchContent_MakeAvailable(glm)
 endif()
 
 # --- Vulkan headers (system or FetchContent) ------------------------------
@@ -62,7 +73,7 @@ if(NOT Vulkan_FOUND)
     )
 endif()
 
-# --- glslangValidator (local tools/ or download) --------------------------
+# --- glslangValidator -----------------------------------------------------
 set(KART_GLSLANG_VALIDATOR "")
 if(EXISTS "${CMAKE_SOURCE_DIR}/tools/glslang/bin/glslangValidator")
     set(KART_GLSLANG_VALIDATOR "${CMAKE_SOURCE_DIR}/tools/glslang/bin/glslangValidator")
@@ -107,31 +118,26 @@ set(KART_SHADER_SOURCE_DIR "${CMAKE_SOURCE_DIR}/shaders")
 set(KART_SHADER_OUTPUT_DIR "${CMAKE_BINARY_DIR}/shaders")
 file(MAKE_DIRECTORY "${KART_SHADER_OUTPUT_DIR}")
 
-set(KART_SHADER_SOURCES
-    "${KART_SHADER_SOURCE_DIR}/triangle.vert"
-    "${KART_SHADER_SOURCE_DIR}/triangle.frag"
-)
-
 set(KART_SHADER_SPV
-    "${KART_SHADER_OUTPUT_DIR}/triangle.vert.spv"
-    "${KART_SHADER_OUTPUT_DIR}/triangle.frag.spv"
+    "${KART_SHADER_OUTPUT_DIR}/mesh.vert.spv"
+    "${KART_SHADER_OUTPUT_DIR}/mesh.frag.spv"
 )
 
 add_custom_command(
-    OUTPUT "${KART_SHADER_OUTPUT_DIR}/triangle.vert.spv"
-    COMMAND "${KART_GLSLANG_VALIDATOR}" -V "${KART_SHADER_SOURCE_DIR}/triangle.vert"
-            -o "${KART_SHADER_OUTPUT_DIR}/triangle.vert.spv"
-    DEPENDS "${KART_SHADER_SOURCE_DIR}/triangle.vert"
-    COMMENT "Compiling triangle.vert"
+    OUTPUT "${KART_SHADER_OUTPUT_DIR}/mesh.vert.spv"
+    COMMAND "${KART_GLSLANG_VALIDATOR}" -V "${KART_SHADER_SOURCE_DIR}/mesh.vert"
+            -o "${KART_SHADER_OUTPUT_DIR}/mesh.vert.spv"
+    DEPENDS "${KART_SHADER_SOURCE_DIR}/mesh.vert"
+    COMMENT "Compiling mesh.vert"
     VERBATIM
 )
 
 add_custom_command(
-    OUTPUT "${KART_SHADER_OUTPUT_DIR}/triangle.frag.spv"
-    COMMAND "${KART_GLSLANG_VALIDATOR}" -V "${KART_SHADER_SOURCE_DIR}/triangle.frag"
-            -o "${KART_SHADER_OUTPUT_DIR}/triangle.frag.spv"
-    DEPENDS "${KART_SHADER_SOURCE_DIR}/triangle.frag"
-    COMMENT "Compiling triangle.frag"
+    OUTPUT "${KART_SHADER_OUTPUT_DIR}/mesh.frag.spv"
+    COMMAND "${KART_GLSLANG_VALIDATOR}" -V "${KART_SHADER_SOURCE_DIR}/mesh.frag"
+            -o "${KART_SHADER_OUTPUT_DIR}/mesh.frag.spv"
+    DEPENDS "${KART_SHADER_SOURCE_DIR}/mesh.frag"
+    COMMENT "Compiling mesh.frag"
     VERBATIM
 )
 
@@ -141,6 +147,12 @@ add_custom_target(shaders ALL DEPENDS ${KART_SHADER_SPV})
 add_executable(archdrift
     src/main.cpp
     src/platform/Window.cpp
+    src/input/KeyboardSource.cpp
+    src/sim/Tunables.cpp
+    src/sim/Kart.cpp
+    src/sim/Track.cpp
+    src/sim/Camera.cpp
+    src/render/MeshData.cpp
     src/render/Renderer.cpp
 )
 
@@ -150,15 +162,12 @@ target_include_directories(archdrift PRIVATE "${CMAKE_SOURCE_DIR}/src")
 
 target_compile_definitions(archdrift PRIVATE
     KART_SHADER_DIR="${KART_SHADER_OUTPUT_DIR}"
+    GLM_FORCE_RADIANS
+    GLM_FORCE_DEPTH_ZERO_TO_ONE
 )
 
-if(TARGET glfw)
-    target_link_libraries(archdrift PRIVATE glfw Vulkan::Vulkan)
-else()
-    target_link_libraries(archdrift PRIVATE glfw Vulkan::Vulkan)
-endif()
+target_link_libraries(archdrift PRIVATE glfw Vulkan::Vulkan glm::glm)
 
-# Some Findglfw3 exports glfw, others glfw3::glfw
 if(TARGET glfw3::glfw)
     target_link_libraries(archdrift PRIVATE glfw3::glfw)
 endif()
