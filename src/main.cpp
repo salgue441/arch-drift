@@ -1,3 +1,6 @@
+/// @file main.cpp
+/// @brief Archdrift entry point (Phase 0: window + triangle).
+
 #include "core/Result.hpp"
 #include "platform/Window.hpp"
 #include "render/Renderer.hpp"
@@ -10,6 +13,7 @@
 
 namespace {
 
+/// Resolves SPIR-V directory: compile-time build path, then common relative fallbacks.
 [[nodiscard]] std::filesystem::path resolve_shader_dir() {
     const std::filesystem::path candidates[] = {
         std::filesystem::path(KART_SHADER_DIR),
@@ -28,7 +32,6 @@ namespace {
 }  // namespace
 
 int main() {
-    using kart::Error;
     using kart::to_string;
 
     auto window = kart::platform::Window::create({.width = 1280, .height = 720, .title = "Archdrift"});

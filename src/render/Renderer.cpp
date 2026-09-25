@@ -1,3 +1,6 @@
+/// @file Renderer.cpp
+/// @brief Vulkan triangle renderer: device setup, swapchain, and frame loop.
+
 #include "render/Renderer.hpp"
 
 #include <GLFW/glfw3.h>

@@ -1,3 +1,6 @@
+/// @file Window.cpp
+/// @brief GLFW window implementation and process-wide glfwInit lifecycle.
+
 #include "platform/Window.hpp"
 
 #define GLFW_INCLUDE_NONE

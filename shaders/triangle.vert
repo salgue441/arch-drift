@@ -1,3 +1,6 @@
+// Phase 0 proof vertex shader: three hard-coded NDC positions colored by vertex index.
+// No vertex buffers; uses gl_VertexIndex. Compiled to SPIR-V by CMake (glslangValidator).
+
 #version 450
 
 vec2 positions[3] = vec2[](

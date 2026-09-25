@@ -44,3 +44,7 @@ Host creates a session with a cryptographically random token. The lobby QR encod
 ## Dependencies
 
 Lean but not purist. Trusted libraries (Boost, GLFW, GLM, VMA, GoogleTest, etc.) are allowed when they earn a clear role. Each added dependency should be noted here with a one-line rationale.
+
+## Documentation
+
+Source comments follow [coding-standards.md](coding-standards.md) (Doxygen `///` on public APIs). Phase module maps live under [`docs/api/`](api/).

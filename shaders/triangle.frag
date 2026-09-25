@@ -1,3 +1,5 @@
+// Phase 0 proof fragment shader: passthrough of vertex color.
+
 #version 450
 
 layout(location = 0) in vec3 fragColor;

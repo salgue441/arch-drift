@@ -9,8 +9,15 @@
 #include <filesystem>
 #include <vector>
 
+/// @file Renderer.hpp
+/// @brief Phase 0 Vulkan renderer: swapchain + colored triangle.
+
 namespace kart::render {
 
+/// Owns the Vulkan instance through present path for the triangle demo.
+///
+/// @thread_safety Main thread only. Do not call from the future net I/O thread.
+/// @warning The referenced Window must outlive this Renderer (surface lifetime).
 class Renderer {
 public:
     Renderer() = default;
@@ -20,10 +27,18 @@ public:
     Renderer& operator=(Renderer&&) noexcept;
     ~Renderer();
 
+    /// Builds instance, device, swapchain, pipeline, and frame sync objects.
+    /// @param window Platform window used for the presentation surface.
+    /// @param shader_dir Directory containing `triangle.vert.spv` / `triangle.frag.spv`.
+    /// @return Owning renderer, or a mapped Error on setup failure.
     [[nodiscard]] static Result<Renderer> create(platform::Window& window,
                                                  const std::filesystem::path& shader_dir);
 
+    /// Acquires a swapchain image, records a triangle draw, and presents.
+    /// Recreates the swapchain when out-of-date, suboptimal, or the window resized.
     [[nodiscard]] VoidResult draw_frame();
+
+    /// Tears down and rebuilds swapchain-dependent resources for the current size.
     [[nodiscard]] VoidResult recreate_swapchain();
 
 private:

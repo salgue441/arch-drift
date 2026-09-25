@@ -51,6 +51,8 @@ cmake --build build --target shaders
 
 - [Architecture](docs/architecture.md) — layers, errors, concurrency, memory, phone trust model
 - [Phases](docs/phases.md) — milestone map
+- [Coding standards](docs/coding-standards.md) — C++ and documentation conventions
+- [Phase 0 API map](docs/api/phase-0.md) — current module ownership and lifetimes
 
 ## License
 
